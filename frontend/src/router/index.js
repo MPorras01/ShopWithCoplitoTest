@@ -2,12 +2,14 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import AdminView from '../views/AdminView.vue'
+import CheckoutView from '../views/CheckoutView.vue'
 import { isAuthenticated, isAdminLike } from '../stores/auth'
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     { path: '/', name: 'home', component: HomeView },
+    { path: '/checkout', name: 'checkout', component: CheckoutView },
     { path: '/login', name: 'login', component: LoginView },
     { path: '/admin', name: 'admin', component: AdminView, meta: { requiresAdmin: true } }
   ]
