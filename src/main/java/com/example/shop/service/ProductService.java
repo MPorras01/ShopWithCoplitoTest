@@ -1,6 +1,7 @@
 package com.example.shop.service;
 
 import com.example.shop.dto.ProductRequest;
+import com.example.shop.exception.BadRequestException;
 import com.example.shop.exception.ResourceNotFoundException;
 import com.example.shop.model.Product;
 import com.example.shop.repository.ProductRepository;
@@ -46,22 +47,43 @@ public class ProductService {
     }
 
     private void mapRequestToProduct(ProductRequest request, Product product) {
+        validatePricing(request);
+
         product.setName(request.getName());
         product.setDescription(request.getDescription());
         product.setCost(request.getCost() == null ? 0.0 : request.getCost());
-        product.setPrice(request.getSalePrice() == null ? request.getPrice() : request.getSalePrice());
+        product.setPrice(request.getPrice());
+        product.setSalePrice(request.getSalePrice());
         product.setStock(request.getStock());
         product.setImageUrls(request.getImageUrls() == null ? new ArrayList<>() : new ArrayList<>(request.getImageUrls()));
     }
 
+    private void validatePricing(ProductRequest request) {
+        if (request.getCost() != null && request.getCost() > request.getPrice()) {
+            throw new BadRequestException("El costo no puede ser mayor al precio base de venta");
+        }
+
+        if (request.getSalePrice() != null && request.getSalePrice() > request.getPrice()) {
+            throw new BadRequestException("El precio promocional no puede ser mayor al precio base");
+        }
+    }
+
+    public double getEffectiveSellingPrice(Product product) {
+        if (product.getSalePrice() != null && product.getSalePrice() > 0.0) {
+            return product.getSalePrice();
+        }
+        return product.getPrice();
+    }
+
     public double calculateMarginAmount(Product product) {
-        return product.getPrice() - product.getCost();
+        return getEffectiveSellingPrice(product) - product.getCost();
     }
 
     public double calculateMarginPercent(Product product) {
-        if (product.getPrice() == null || product.getPrice() == 0.0) {
+        double effectivePrice = getEffectiveSellingPrice(product);
+        if (effectivePrice == 0.0) {
             return 0.0;
         }
-        return (calculateMarginAmount(product) / product.getPrice()) * 100.0;
+        return (calculateMarginAmount(product) / effectivePrice) * 100.0;
     }
 }

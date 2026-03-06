@@ -34,6 +34,9 @@ public class Product {
     @Column(nullable = false)
     private Double price;
 
+    @Column
+    private Double salePrice;
+
     @Column(nullable = false)
     private Integer stock;
 
@@ -82,13 +85,12 @@ public class Product {
         this.cost = cost;
     }
 
-    // Alias kept for gradual migration toward explicit ecommerce naming.
     public Double getSalePrice() {
-        return price;
+        return salePrice;
     }
 
     public void setSalePrice(Double salePrice) {
-        this.price = salePrice;
+        this.salePrice = salePrice;
     }
 
     public Integer getStock() {
