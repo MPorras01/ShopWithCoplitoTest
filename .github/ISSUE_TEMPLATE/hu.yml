@@ -1,0 +1,59 @@
+name: "Historia de Usuario (HU)"
+description: "Crear una HU que luego sera asociada a un Merge Request"
+title: "HU-XXX: <titulo breve>"
+labels:
+  - hu
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Completa esta HU antes de abrir el Merge Request.
+  - type: input
+    id: hu-id
+    attributes:
+      label: ID de HU
+      description: "Ejemplo: HU-001"
+      placeholder: "HU-001"
+    validations:
+      required: true
+  - type: input
+    id: resumen
+    attributes:
+      label: Resumen
+      placeholder: "Como <rol> quiero <objetivo> para <beneficio>"
+    validations:
+      required: true
+  - type: textarea
+    id: alcance
+    attributes:
+      label: Alcance
+      description: "Que incluye y que no incluye"
+    validations:
+      required: true
+  - type: textarea
+    id: criterios
+    attributes:
+      label: Criterios de aceptacion
+      description: "Lista de criterios verificables"
+      placeholder: |
+        - Dado ... cuando ... entonces ...
+        - Dado ... cuando ... entonces ...
+    validations:
+      required: true
+  - type: textarea
+    id: pruebas
+    attributes:
+      label: Plan de pruebas
+      description: "Como se valida en DEV, RELEASE y QA"
+    validations:
+      required: true
+  - type: dropdown
+    id: prioridad
+    attributes:
+      label: Prioridad
+      options:
+        - Alta
+        - Media
+        - Baja
+    validations:
+      required: true
