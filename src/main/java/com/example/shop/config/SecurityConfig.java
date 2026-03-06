@@ -33,7 +33,8 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/h2-console/**").permitAll()
+                    .requestMatchers("/", "/index.html", "/assets/**", "/favicon.ico").permitAll()
+                    .requestMatchers("/auth/**", "/h2-console/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/products", "/products/**").permitAll()
                         .anyRequest().authenticated()
                 )
