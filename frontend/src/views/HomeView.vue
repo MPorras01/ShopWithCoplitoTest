@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { getProducts } from '../services/api'
+import { addToCart } from '../stores/cart'
 
 const products = ref([])
 const loading = ref(false)
@@ -55,6 +56,9 @@ onMounted(loadProducts)
           <div class="meta">
             <strong>${{ product.price }}</strong>
             <span>Stock: {{ product.stock }}</span>
+          </div>
+          <div class="actions">
+            <button @click="addToCart(product)">Agregar al carrito</button>
           </div>
         </div>
       </article>
