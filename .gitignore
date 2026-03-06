@@ -16,3 +16,8 @@ Thumbs.db
 ### Env ###
 .env
 .env.*
+
+### Frontend generated ###
+frontend/node/
+src/main/resources/static/index.html
+src/main/resources/static/assets/
