@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { RouterLink, RouterView, useRouter } from 'vue-router'
 import { authState, clearAuth, isAdminLike, isAuthenticated } from './stores/auth'
+import { cartCount } from './stores/cart'
 
 const router = useRouter()
 
@@ -20,6 +21,7 @@ function logout() {
       <RouterLink to="/" class="brand">Tienda Verde</RouterLink>
       <nav>
         <RouterLink to="/">Catalogo</RouterLink>
+        <RouterLink to="/checkout">Checkout ({{ cartCount }})</RouterLink>
         <RouterLink v-if="!logged" to="/login">Login</RouterLink>
         <RouterLink v-if="canManage" to="/admin">Admin</RouterLink>
         <button v-if="logged" @click="logout" class="ghost">Salir</button>
@@ -37,18 +39,3 @@ function logout() {
     </footer>
   </div>
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
