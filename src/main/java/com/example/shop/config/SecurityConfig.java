@@ -35,6 +35,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/", "/index.html", "/assets/**", "/favicon.ico").permitAll()
                     .requestMatchers("/auth/**", "/h2-console/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/categories", "/categories/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/products", "/products/**").permitAll()
                         .anyRequest().authenticated()
                 )

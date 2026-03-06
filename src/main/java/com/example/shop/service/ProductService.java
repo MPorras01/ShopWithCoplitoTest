@@ -3,7 +3,9 @@ package com.example.shop.service;
 import com.example.shop.dto.ProductRequest;
 import com.example.shop.exception.BadRequestException;
 import com.example.shop.exception.ResourceNotFoundException;
+import com.example.shop.model.Category;
 import com.example.shop.model.Product;
+import com.example.shop.repository.CategoryRepository;
 import com.example.shop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,13 +16,18 @@ import java.util.List;
 @Service
 public class ProductService {
     private final ProductRepository repo;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public ProductService(ProductRepository repo) {
+    public ProductService(ProductRepository repo, CategoryRepository categoryRepository) {
         this.repo = repo;
+        this.categoryRepository = categoryRepository;
     }
 
-    public List<Product> findAll() {
+    public List<Product> findAll(Long categoryId) {
+        if (categoryId != null) {
+            return repo.findByCategoryId(categoryId);
+        }
         return repo.findAll();
     }
 
@@ -55,7 +62,17 @@ public class ProductService {
         product.setPrice(request.getPrice());
         product.setSalePrice(request.getSalePrice());
         product.setStock(request.getStock());
+        product.setCategory(resolveCategory(request.getCategoryId()));
         product.setImageUrls(request.getImageUrls() == null ? new ArrayList<>() : new ArrayList<>(request.getImageUrls()));
+    }
+
+    private Category resolveCategory(Long categoryId) {
+        if (categoryId == null) {
+            return null;
+        }
+
+        return categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Categoria no encontrada con id: " + categoryId));
     }
 
     private void validatePricing(ProductRequest request) {

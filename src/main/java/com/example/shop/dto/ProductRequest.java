@@ -26,6 +26,8 @@ public class ProductRequest {
     @NotNull
     private Integer stock;
 
+    private Long categoryId;
+
     private List<String> imageUrls;
 
     public String getName() {
@@ -74,6 +76,14 @@ public class ProductRequest {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public List<String> getImageUrls() {

@@ -23,8 +23,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> list() {
-        return service.findAll();
+    public List<Product> list(@RequestParam(required = false) Long categoryId) {
+        return service.findAll(categoryId);
     }
 
     @GetMapping("/{id}")
