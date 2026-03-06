@@ -48,8 +48,20 @@ public class ProductService {
     private void mapRequestToProduct(ProductRequest request, Product product) {
         product.setName(request.getName());
         product.setDescription(request.getDescription());
-        product.setPrice(request.getPrice());
+        product.setCost(request.getCost() == null ? 0.0 : request.getCost());
+        product.setPrice(request.getSalePrice() == null ? request.getPrice() : request.getSalePrice());
         product.setStock(request.getStock());
         product.setImageUrls(request.getImageUrls() == null ? new ArrayList<>() : new ArrayList<>(request.getImageUrls()));
+    }
+
+    public double calculateMarginAmount(Product product) {
+        return product.getPrice() - product.getCost();
+    }
+
+    public double calculateMarginPercent(Product product) {
+        if (product.getPrice() == null || product.getPrice() == 0.0) {
+            return 0.0;
+        }
+        return (calculateMarginAmount(product) / product.getPrice()) * 100.0;
     }
 }

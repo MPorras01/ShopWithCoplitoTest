@@ -29,6 +29,9 @@ public class Product {
     private String description;
 
     @Column(nullable = false)
+    private Double cost = 0.0;
+
+    @Column(nullable = false)
     private Double price;
 
     @Column(nullable = false)
@@ -69,6 +72,23 @@ public class Product {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Double getCost() {
+        return cost;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
+    }
+
+    // Alias kept for gradual migration toward explicit ecommerce naming.
+    public Double getSalePrice() {
+        return price;
+    }
+
+    public void setSalePrice(Double salePrice) {
+        this.price = salePrice;
     }
 
     public Integer getStock() {

@@ -13,9 +13,15 @@ public class ProductRequest {
 
     private String description;
 
+    @DecimalMin(value = "0.0")
+    private Double cost;
+
     @NotNull
     @DecimalMin(value = "0.0")
     private Double price;
+
+    @DecimalMin(value = "0.0")
+    private Double salePrice;
 
     @NotNull
     private Integer stock;
@@ -44,6 +50,22 @@ public class ProductRequest {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Double getSalePrice() {
+        return salePrice;
+    }
+
+    public void setSalePrice(Double salePrice) {
+        this.salePrice = salePrice;
+    }
+
+    public Double getCost() {
+        return cost;
+    }
+
+    public void setCost(Double cost) {
+        this.cost = cost;
     }
 
     public Integer getStock() {
