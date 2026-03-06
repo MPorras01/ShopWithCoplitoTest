@@ -4,6 +4,8 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.List;
+
 public class ProductRequest {
 
     @NotBlank
@@ -17,6 +19,8 @@ public class ProductRequest {
 
     @NotNull
     private Integer stock;
+
+    private List<String> imageUrls;
 
     public String getName() {
         return name;
@@ -48,5 +52,13 @@ public class ProductRequest {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 }
